@@ -68,7 +68,7 @@ namespace API.Controllers
             {
                 return Json(new ValidateAccessTokenViewModel { code = ErrorType.Timeout, message = "Your access token is already Timeout!" });
             }
-
+            throw new NotImplementedException();
         }
     }
 }
