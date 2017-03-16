@@ -1,0 +1,56 @@
+﻿@model Account.Models.AccountViewModels.IndexViewModel
+
+<form class="main-content" asp-controller="Account" asp-action="Index" method="post">
+    @if (!Model.ModelStateValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <strong>Invalid Input!</strong>
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+    <div class="row row-inline-block small-spacing">
+        <div class="col-xs-12">
+            <div class="box-content bordered success margin-top-20">
+                <a asp-controller="Account" asp-action="Avatar">
+                    <img class="img-circle appinline" src="@Model.UserIconAddress">
+                </a>
+                <h4 class="box-title"><i class="fa fa-pencil-square ico"></i>User Profile</h4>
+                <div class="row">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <label asp-for="NickName"></label>
+                            <input asp-for="NickName" class="form-control" type="text" placeholder="Enter your app name...">
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Bio"></label>
+                            <textarea asp-for="Bio" class="form-control" placeholder="Enter a short description about your app..." rows="3">Account service for aiursoft</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="URL"></label>
+                            <input asp-for="URL" class="form-control" type="text" placeholder="Enter your personal wesite url...">
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Company"></label>
+                            <input asp-for="Company" class="form-control" type="text" placeholder="Enter your company name...">
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Location"></label>
+                            <input asp-for="Location" class="form-control" type="text" placeholder="Enter your location...">
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-top-30">
+                        <button class="btn btn-primary btn-sm" type="submit">Update Profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @{
+        await Html.RenderPartialAsync("_footer");
+    }
+</form>

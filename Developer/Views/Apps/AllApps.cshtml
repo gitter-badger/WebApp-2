@@ -1,0 +1,56 @@
+﻿@model Developer.Models.AppsViewModels.AllAppsViewModel
+@{
+    ViewData["Title"] = "All Apps";
+    Layout = "_AppLayout";
+}
+<div class="main-content">
+    <div class="prj-header margin-bottom-30">
+        <a asp-controller="Apps" asp-action="CreateApp" class="btn btn-info btn-submit-prj btn-sm">Create App</a>
+        <div class="result-count">@Model.AllApps.Count() Apps</div>
+        <ul class="filters">
+            <li><a class="active" href="#">All</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">API Wrappers</a></li>
+            <li><a href="#">Apps</a></li>
+            <li><a href="#">Others</a></li>
+        </ul>
+    </div>
+
+    <div class="prj-list row">
+        @foreach (var app in Model.AllApps)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 margin-bottom-30">
+                <a asp-controller="Apps" asp-action="ViewApp" asp-route-id="@app.AppId" class="prj-item">
+                    <div class="top-project-section">
+                        <div class="project-icon">
+                            <img style="width:100px;height:100px;" class="img-circle" src="@app.AppIconAddress">
+                        </div>
+                        <h3>@Html.DisplayFor(t => app.AppName)</h3>
+                        <div class="meta">
+                            <p class="author">
+                                <span>@Html.DisplayFor(t => app.AppDescription)</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bottom-project-section">
+                        <div class="meta">
+                            <div class="points">
+                                <i class="fa fa-tv"></i> @Html.DisplayFor(t => app.AppPlatform)
+                            </div>
+                            <div class="views">
+                                <i class="fa fa-university"></i> @Html.DisplayFor(t => app.AppCategory)
+                            </div>
+                            <span class="feedable-time timeago">@app.ToRegularTime()</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+    <div class="text-center">
+        <a asp-controller="Apps" asp-action="CreateApp" class="btn btn-success">Create App</a>
+    </div>
+    @{
+        await Html.RenderPartialAsync("_footer");
+    }
+</div>

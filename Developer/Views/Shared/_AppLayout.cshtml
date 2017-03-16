@@ -1,0 +1,280 @@
+﻿@model Developer.Models.AppsViewModels.AppLayoutModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@ViewData["Title"] - Apps Management</title>
+    <link rel="stylesheet" href="@Values.CdnServerAddress/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="@Values.CdnServerAddress/lib/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="@Values.CdnServerAddress/lib/nprogress/nprogress.css">
+    <link rel="stylesheet" href="@Values.CdnServerAddress/lib/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="@Values.CdnServerAddress/lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="@Values.CdnServerAddress/lib/Waves/dist/waves.min.css">
+    <link rel="stylesheet" href="@Values.CdnServerAddress/lib/sweetalert/dist/sweetalert.css">
+    <link rel="stylesheet" href="@Values.CdnServerAddress/lib/dropify/dist/css/dropify.min.css">
+    <link rel="stylesheet" href="@Values.CdnServerAddress/css/AiurAdminUI.css">
+    @RenderSection("css", required: false)
+</head>
+
+<body>
+
+    <div class="main-menu">
+        <header class="header">
+            <a asp-controller="Apps" asp-action="Index" class="logo"><i class="ico mdi mdi-view-dashboard"></i>DashBoard</a>
+            <button type="button" class="button-close fa fa-times js__menu_close"></button>
+            <div class="user">
+                <a href="#" class="avatar">
+                    <img src="@Model.UserIconImageAddress" alt="">
+                    <span class="status online"></span>
+                </a>
+                <h5 class="name"><a href="profile.html">@Html.DisplayFor(t => Model.NickName)</a></h5>
+                <h5 class="position">Administrator</h5>
+                <div class="control-wrap js__drop_down">
+                    <i class="fa fa-caret-down js__drop_down_button"></i>
+                    <div class="control-list">
+                        <div class="control-item"><a href="profile.html"><i class="fa fa-user"></i> Profile</a></div>
+                        <div class="control-item"><a href="@(new AiurUrl(Values.AccountServerAddress))"><i class="fa fa-gear"></i> Settings</a></div>
+                        <div class="control-item"><a href="javascript:$('#logoutForm').submit()"><i class="fa fa-sign-out"></i> Log out</a></div>
+                        <form class="hidden" asp-controller="Home" asp-action="LogOff" method="post" id="logoutForm"></form>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="content">
+            <div class="navigation">
+                <h5 class="title">Apps</h5>
+                <ul class="menu js__accordion">
+                    <li class="@(Model.ActivePanel == 0 ? "current":"")">
+                        <a class="waves-effect" asp-controller="Apps" asp-action="Index"><i class="menu-icon mdi mdi-server-network"></i><span>Dashboard</span></a>
+                    </li>
+                    <li class="@(Model.ActivePanel == 1 ? " current":"")">
+                        <a class="waves-effect" asp-controller="Apps" asp-action="AllApps"><i class="menu-icon mdi mdi-apps"></i><span>Apps</span><span class="notice notice-blue">@Model.AppCount</span></a>
+                    </li>
+                    <li class="@(Model.ActivePanel == 2 ? "current":"")">
+                        <a class="waves-effect" asp-controller="Bucket" asp-action="Index"><i class="menu-icon mdi mdi-database"></i><span>Buckets</span></a>
+                    </li>
+                    <li class="@(Model.ActivePanel == 3 ? "current":"")">
+                        <a class="waves-effect" asp-controller="Files" asp-action="Index"><i class="menu-icon fa fa-folder-open"></i><span>Files</span></a>
+                    </li>
+                </ul>
+                <h5 class="title">Settings</h5>
+                <ul class="menu js__accordion">
+                    <li>
+                        <a class="waves-effect parent-item js__control" href="#"><i class="menu-icon mdi mdi-book-open-page-variant"></i><span>Docs</span><span class="menu-arrow fa fa-angle-down"></span></a>
+                        <ul class="sub-menu js__content">
+                            <li><a href="ui-buttons.html">OAuth</a></li>
+                            <li><a href="ui-cards.html">OSS</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="waves-effect parent-item js__control" href="#"><i class="menu-icon mdi mdi-chart-bar"></i><span>Statitics</span><span class="menu-arrow fa fa-angle-down"></span></a>
+                        <ul class="sub-menu js__content">
+                            <li><a href="ui-buttons.html">OAuth</a></li>
+                            <li><a href="ui-cards.html">OSS</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed-navbar">
+        <div class="pull-left">
+            <button type="button" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
+            <h1 class="page-title hidden-xs">@ViewData["Title"]</h1>
+        </div>
+        <div class="pull-right">
+            <div class="ico-item">
+                <a href="#" class="ico-item mdi mdi-magnify js__toggle_open" data-target="#searchform-header"></a>
+                <form action="#" id="searchform-header" class="searchform js__toggle"><input type="search" placeholder="Search..." class="input-search"><button class="mdi mdi-magnify button-search" type="submit"></button></form>
+            </div>
+            <a href="#" class="ico-item mdi mdi-email notice-alarm js__toggle_open" data-target="#message-popup"></a>
+            <a href="#" class="ico-item mdi mdi-bell notice-alarm js__toggle_open" data-target="#notification-popup"></a>
+            <a href="#" class="ico-item mdi mdi-logout js__logout"></a>
+        </div>
+    </div>
+
+    <div id="notification-popup" class="notice-popup js__toggle" data-space="75">
+        <h2 class="popup-title">Your Notifications</h2>
+        <div class="content">
+            <ul class="notice-list">
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-sm-1.jpg" alt=""></span>
+                        <span class="name">John Doe</span>
+                        <span class="desc">Like your post: “Contact Form 7 Multi-Step”</span>
+                        <span class="time">10 min</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-sm-2.jpg" alt=""></span>
+                        <span class="name">Anna William</span>
+                        <span class="desc">Like your post: “Facebook Messenger”</span>
+                        <span class="time">15 min</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar bg-warning"><i class="fa fa-warning"></i></span>
+                        <span class="name">Update Status</span>
+                        <span class="desc">Failed to get available update data. To ensure the please contact us.</span>
+                        <span class="time">30 min</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-1.jpg" alt=""></span>
+                        <span class="name">Jennifer</span>
+                        <span class="desc">Like your post: “Contact Form 7 Multi-Step”</span>
+                        <span class="time">45 min</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-sm-6.jpg" alt=""></span>
+                        <span class="name">Michael Zenaty</span>
+                        <span class="desc">Like your post: “Contact Form 7 Multi-Step”</span>
+                        <span class="time">50 min</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-sm-4.jpg" alt=""></span>
+                        <span class="name">Simon</span>
+                        <span class="desc">Like your post: “Facebook Messenger”</span>
+                        <span class="time">1 hour</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar bg-violet"><i class="fa fa-flag"></i></span>
+                        <span class="name">Account Contact Change</span>
+                        <span class="desc">A contact detail associated with your account has been changed.</span>
+                        <span class="time">2 hours</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-sm-7.jpg" alt=""></span>
+                        <span class="name">Helen 987</span>
+                        <span class="desc">Like your post: “Facebook Messenger”</span>
+                        <span class="time">Yesterday</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="images/avatar-2.jpg" alt=""></span>
+                        <span class="name">Denise Jenny</span>
+                        <span class="desc">Like your post: “Contact Form 7 Multi-Step”</span>
+                        <span class="time">Oct, 28</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-sm-8.jpg" alt=""></span>
+                        <span class="name">Thomas William</span>
+                        <span class="desc">Like your post: “Facebook Messenger”</span>
+                        <span class="time">Oct, 27</span>
+                    </a>
+                </li>
+            </ul>
+            <a href="#" class="notice-read-more">See more messages <i class="fa fa-angle-down"></i></a>
+        </div>
+    </div>
+
+    <div id="message-popup" class="notice-popup js__toggle" data-space="75">
+        <h2 class="popup-title">Recent Messages<a href="#" class="pull-right text-danger">New message</a></h2>
+        <div class="content">
+            <ul class="notice-list">
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-sm-1.jpg" alt=""></span>
+                        <span class="name">John Doe</span>
+                        <span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere repellat voluptates.</span>
+                        <span class="time">10 min</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-sm-3.jpg" alt=""></span>
+                        <span class="name">Harry Halen</span>
+                        <span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere repellat voluptates.</span>
+                        <span class="time">15 min</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-sm-4.jpg" alt=""></span>
+                        <span class="name">Thomas Taylor</span>
+                        <span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere repellat voluptates.</span>
+                        <span class="time">30 min</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-1.jpg" alt=""></span>
+                        <span class="name">Jennifer</span>
+                        <span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere repellat voluptates.</span>
+                        <span class="time">45 min</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-sm-5.jpg" alt=""></span>
+                        <span class="name">Helen Candy</span>
+                        <span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere repellat voluptates.</span>
+                        <span class="time">45 min</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-2.jpg" alt=""></span>
+                        <span class="name">Anna Cavan</span>
+                        <span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere repellat voluptates.</span>
+                        <span class="time">1 hour ago</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar bg-success"><i class="fa fa-user"></i></span>
+                        <span class="name">Jenny Betty</span>
+                        <span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere repellat voluptates.</span>
+                        <span class="time">1 day ago</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="avatar"><img src="/images/avatar-5.jpg" alt=""></span>
+                        <span class="name">Denise Peterson</span>
+                        <span class="desc">Amet odio neque nobis consequuntur consequatur a quae, impedit facere repellat voluptates.</span>
+                        <span class="time">1 year ago</span>
+                    </a>
+                </li>
+            </ul>
+            <a href="#" class="notice-read-more">See more messages <i class="fa fa-angle-down"></i></a>
+        </div>
+    </div>
+    <div id="wrapper">
+        @RenderBody()
+    </div>
+    <script src="@Values.CdnServerAddress/lib/jquery/dist/jquery.min.js"></script>
+    <script src="@Values.CdnServerAddress/js/modernizr.js"></script>
+    <script src="@Values.CdnServerAddress/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="@Values.CdnServerAddress/lib/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="@Values.CdnServerAddress/lib/nprogress/nprogress.js"></script>
+    <script src="@Values.CdnServerAddress/lib/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="@Values.CdnServerAddress/lib/Waves/dist/waves.min.js"></script>
+    <script src="@Values.CdnServerAddress/lib/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="@Values.CdnServerAddress/lib/dropify/dist/js/dropify.min.js"></script>
+    <script src="@Values.CdnServerAddress/js/AiurAdminUI.js"></script>
+    @RenderSection("js", required: false)
+    <script>
+            !function ($) { "use strict"; $(".dropify").dropify() }(jQuery);
+    </script>
+</body>
+</html>

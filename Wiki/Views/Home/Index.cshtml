@@ -1,0 +1,49 @@
+﻿@model Wiki.Models.HomeViewModels.IndexViewModel
+@{
+    ViewData["Title"] = "Home";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 site-sidebar hidden-xs">
+            <div class="hidden-print ng-scope">
+                @foreach (var article in Model.Articles)
+                {
+                    <ul class="nav site-sidenav">
+                        <li class="@(Model.CurrentArticleId == article.ArticleId ? "active":"")">
+                            <a asp-controller="Home" asp-action="Index" asp-route-id="@article.ArticleTitle">@article.ArticleTitle</a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div>
+        <div class="col-md-9 col-md-offset-3 col-sm-offset-3 main-content doc">
+            <article class="document wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+                <div id="content">@Html.Raw(Model.Content)</div>
+            </article>
+            <div id="livefyre-comments"></div>
+            <script type="text/javascript" src="http://zor.livefyre.com/wjs/v3.0/javascripts/livefyre.js"></script>
+            <script type="text/javascript">
+                (function () {
+                    var articleId = fyre.conv.load.makeArticleId(null);
+                    fyre.conv.load({}, [{
+                        el: 'livefyre-comments',
+                        network: "livefyre.com",
+                        siteId: "384840",
+                        articleId: articleId,
+                        signed: false,
+                        collectionMeta: {
+                            articleId: articleId,
+                            url: fyre.conv.load.makeCollectionUrl(),
+                        }
+                    }], function() {});
+                }());
+            </script>
+            <!-- END: Livefyre Embed -->
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $("#content").html(marked($("#content").html()));
+    </script>
+}

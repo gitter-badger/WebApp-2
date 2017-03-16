@@ -1,0 +1,55 @@
+﻿@model AiursoftBase.Models.API.OAuthViewModels.AuthorizeConfirmViewModel
+@{
+    ViewData["Title"] = "Confirm";
+}
+<div class="lock-wrapper">
+    <div class="panel lock-box" id="panelinSignin">
+        <div class="center">
+            <img class="img-circle" style="height:100px;width:100px;" src="@Model.UserIcon">
+        </div>
+        <h4> Hello @Html.DisplayFor(t => t.UserNickName) !</h4>
+        <p class="text-center">Do you want to share your information with </p>
+        <p class="text-center"><strong>@Html.DisplayFor(t => t.AppName)</strong>?</p>
+        <hr />
+        <div class="row">
+            <div class="form-inline">
+                @if (Model != null)
+                {
+                    <form class="form-group col-md-12" asp-controller="OAuth" asp-action="AuthorizeConfirm" method="post">
+                        <input asp-for="AppId" type="hidden" />
+                        <input asp-for="ToRedirect" type="hidden" />
+                        <input asp-for="State" type="hidden" />
+                        <input asp-for="Scope" type="hidden" />
+                        <input asp-for="ResponseType" type="hidden" />
+                        <div class="registration">
+                            Hello, @Model.UserNickName!
+                            <a asp-action="Authorize" asp-controller="OAuth"
+                               asp-route-redirect_uri="@Model.ToRedirect"
+                               asp-route-state="@Model.State"
+                               asp-route-appid="@Model.AppId"
+                               asp-route-scope="@Model.Scope"
+                               asp-route-response_type="@Model.ResponseType"
+                               asp-route-ForceSignInLocally="true">
+                                <span class="text-primary"> Click here </span>
+                            </a>to switch to another account.
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-3 col-xs-3 col-md-offset-6 col-sm-offset-6 col-xs-offset-6">
+                                <button class="btn btn-block btn-success" type="submit">Allow</button>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                <a class="btn btn-block btn-default" href="@Model.GetRedirectRoot()">Deny</a>
+                            </div>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <div class="col-md-12 alert-danger">
+                        An error occured with oauth system!
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

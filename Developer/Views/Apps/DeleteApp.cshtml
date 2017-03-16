@@ -1,0 +1,38 @@
+﻿@model Developer.Models.AppsViewModels.DeleteAppViewModel
+@{
+    ViewData["Title"] = "Delete" + Model.AppName;
+    Layout = "_AppLayout";
+}
+<div class="main-content">
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <strong>Caution!</strong> You are about to delete "@Model.AppName"! If you are confirmed to continue, you will lose all<strong> users granted, buckets created, files uploaded</strong> and this app won't be able to use again! This process is not recoverable!
+    </div>
+    <div class="row row-inline-block small-spacing">
+        <form class="col-xs-12" asp-controller="Apps" asp-action="DeleteApp" method="post">
+            <div class="box-content bordered danger">
+                <h4 class="box-title"><i class="fa fa-trash ico"></i>Delete App</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="AppName"></label>
+                            <input asp-for="AppName" type="text" class="form-control" placeholder="Enter your app name...">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AppId"></label>
+                            <input asp-for="AppId" type="text" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 margin-top-30">
+                        <a class="btn btn-success btn-sm" asp-controller="Apps" asp-action="ViewApp" asp-route-id="@Model.AppId">Back to App</a>
+                        <button class="btn btn-danger btn-sm" type="submit">Confirm to delete</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    @{
+        await Html.RenderPartialAsync("_footer");
+    }
+</div>

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @Values.ProjectName Wiki</title>
+    <link href="@Values.CdnServerAddress/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="@Values.CdnServerAddress/lib/animate.css/animate.css" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header navbar">
+        <div class="container-fluid">
+            <div class="pull-left navbar-header">
+                <a href="/" class="navbar-brand">
+                    <i class="fa fa-book"></i>
+                    @Values.ProjectName Document Center
+                </a>
+            </div>
+            <div class="pull-right hidden-xs">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="@Values.Empty">Back to Aiursoft.com</a>
+                    </li>
+                    <hr>
+                    <li>
+                        <a href="@Values.ForumServerAddress">Forum</a>
+                    </li>
+                    <hr>
+                    <li class="active">
+                        <a href="/">API Docs</a>
+                    </li>
+                    <hr>
+                    <li>
+                        <a href="@Values.DeveloperServerAddress/Apps" target="_blank">
+                            <i class="fa fa-plus-circle"></i>
+                            Create App
+                        </a>
+                    </li>
+                    @await Html.PartialAsync("_LoginPartial")
+                </ul>
+            </div>
+        </div>
+    </header>
+    <secction class="site-content">
+         @RenderBody()
+        <footer class="site-footer col-md-3 col-xs-12">
+            <div class="container-fluid">
+                <p>Copyright © 2015- @DateTime.Now.Year @Values.ProjectName</p>
+            </div>
+        </footer>
+    </secction>
+    <script src="@Values.CdnServerAddress/lib/wow/dist/wow.js"></script>
+    <script src="@Values.CdnServerAddress/lib/jquery/dist/jquery.js"></script>
+    <script src="@Values.CdnServerAddress/lib/marked/marked.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

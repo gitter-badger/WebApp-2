@@ -1,0 +1,10 @@
+﻿公开的属性：
+	AmmBnn
+局部变量：
+	ammBnn
+私有的属性\全局引用：
+	_ammBnn
+公开的方法：
+	AmmBnn
+私有的方法
+	_AmmBnn

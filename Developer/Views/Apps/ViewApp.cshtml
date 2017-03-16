@@ -1,0 +1,243 @@
+﻿@model Developer.Models.AppsViewModels.ViewAppViewModel
+@{
+    ViewData["Title"] = Model.AppName;
+    Layout = "_AppLayout";
+}
+<form asp-controller="Apps" asp-action="ViewApp" method="post" class="main-content">
+    @if (Model.JustHaveUpdated)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <strong>Well done!</strong> You successfully updated the profile of this app.
+        </div>
+    }
+    @if (!Model.ModelStateValid)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <strong>Invalid Input!</strong>
+            <div asp-validation-summary="All"></div>
+        </div>
+    }
+    <div class="row row-inline-block small-spacing">
+        <div class="col-xs-12">
+            <div class="box-content bordered success margin-top-20">
+                <a href="#" data-toggle="modal" data-target="#boostrapModal-1">
+                    <img class="img-circle appinline" src="@Model.AppIconAddress" />
+                </a>
+                <h4 class="box-title"><i class="fa fa-pencil-square ico"></i>App Info</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="AppName"></label>
+                            <input asp-for="AppName" type="text" class="form-control" placeholder="Enter your app name...">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AppId"></label>
+                            <input asp-for="AppId" type="text" class="form-control" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AppSecret"></label>
+                            <input asp-for="AppSecret" type="text" class="form-control" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AppDescription"></label>
+                            <textarea class="form-control" asp-for="AppDescription" rows="3" placeholder="Enter a short description about your app..."></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label asp-for="AppCategory"></label>
+                            <input asp-for="AppCategory" type="text" class="form-control" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AppPlatform"></label>
+                            <input asp-for="AppPlatform" type="text" class="form-control" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PrivacyStatementUrl"></label>
+                            <input asp-for="PrivacyStatementUrl" type="url" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LicenseUrl"></label>
+                            <input asp-for="LicenseUrl" type="url" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-top-30">
+                        <button type="submit" class="btn btn-primary btn-sm">Update Profile</button>
+                        <a class="btn btn-info btn-sm" asp-controller="Apps" asp-action="AllApps">Back to List</a>
+                        <a class="btn btn-danger btn-sm" asp-controller="Apps" asp-action="DeleteApp" asp-route-id="@Model.AppId">Delete App</a>
+                    </div>
+                </div>
+            </div>
+            <div class="box-content bordered info">
+                <h4 class="box-title"><i class="fa fa-sign-in ico"></i>OAuth Settings</h4>
+                <div class="card-content">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="switch success">
+                                    <input asp-for="EnableOAuth" type="checkbox">
+                                    <label asp-for="EnableOAuth"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <p>When you set this switch to on, you will be able to using OAuth 2.0 API to authenticate your app with Aiursoft authentication.</p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="switch info">
+                                    <input type="checkbox" asp-for="ForceInputPassword">
+                                    <label asp-for="ForceInputPassword">Force Input Password</label>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <p>Force the user to input his password again even when he is already authenicated by Aiursoft. (Not suggested)</p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="switch info">
+                                    <input type="checkbox" asp-for="ForceConfirmation">
+                                    <label asp-for="ForceConfirmation">Force Confirmation</label>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <p>Force the user to confirm to grant your app even when he is already granted your app. </p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="switch warning">
+                                    <input type="checkbox" asp-for="DebugMode">
+                                    <label asp-for="DebugMode">Debug Mode</label>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <p>Debug mode allows any domain accessible to authenticate your app.</p>
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <label asp-for="AppDomain"></label>
+                            <input asp-for="AppDomain" type="text" class="form-control" placeholder="Enter your valid app domain. For example: google.com">
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-top-30">
+                        <h4 class="box-title"><i class="fa fa-shield ico"></i>Granted users of this app: (Top 200)</h4>
+                        <table class="table table-striped datatable">
+                            <thead>
+                                <tr>
+                                    <th>User Open Id</th>
+                                    <th>User Name</th>
+                                    <th>Sex</th>
+                                    <th>Grant Time</th>
+                                    <th>Prefered Language</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var grant in Model.Grants)
+                                {
+                                <tr>
+                                    <td>@grant.User.OpenId</td>
+                                    <td>@grant.User.NickName</td>
+                                    <td>@grant.User.Sex</td>
+                                    <td>@Html.DisplayFor(t => grant.Grant.GrantTime)</td>
+                                    <td>@grant.User.PreferedLanguage</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12 margin-top-30">
+                        <button type="submit" class="btn btn-primary btn-sm">Update OAuth Settings</button>
+                        <a class="btn btn-info btn-sm" asp-controller="Apps" asp-action="AllApps">Back to list</a>
+                    </div>
+                </div>
+            </div>
+            <div class="box-content bordered warning">
+                <h4 class="box-title"><i class="fa fa-database ico"></i>Object Storage Settings</h4>
+                <div class="card-content">
+                    <h5>Buckets of this app：</h5>
+                    <table class="table table-striped datatable">
+                        <thead>
+                            <tr>
+                                <th>Bucket ID</th>
+                                <th>Bucket Name</th>
+                                <th>Files count</th>
+                                <th>Open to read</th>
+                                <th>Open to upload</th>
+                                <th style="width: 460px">Operation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var buc in Model.Buckets)
+                            {
+                            <tr>
+                                <td>@buc.BucketId</td>
+                                <td>@buc.BucketName</td>
+                                <td>@buc.FileCount</td>
+                                <td>
+                                    <div class="switch success">
+                                        <input type="checkbox" checked="@buc.OpenToRead" readonly="readonly">
+                                        <label></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="switch warning">
+                                        <input type="checkbox" checked="@buc.OpenToUpload" readonly="readonly">
+                                        <label></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a asp-controller="Bucket" asp-action="EditBucket" asp-route-id="@buc.BucketId" class="btn btn-warning waves-effect waves-light">Edit</a>
+                                        <a asp-controller="Bucket" asp-action="DeleteBucket" asp-route-id="@buc.BucketId" class="btn btn-danger waves-effect waves-light">Delete</a>
+                                        <a asp-controller="Files" asp-action="ViewFiles" asp-route-id="@buc.BucketId" class="btn btn-info waves-effect waves-light">View Files</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <div class="col-md-12 margin-top-30">
+                        <a asp-controller="Bucket" asp-action="CreateBucket" asp-route-id="@Model.AppId" class="btn btn-success btn-sm">Create New Bucket</a>
+                        <a class="btn btn-info btn-sm" asp-controller="Apps" asp-action="AllApps">Back to list</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @{
+        await Html.RenderPartialAsync("_footer");
+    }
+</form>
+@section js{
+    <form asp-action="ChangeIcon" asp-controller="Apps" method="post" class="modal fade" id="boostrapModal-1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" enctype="multipart/form-data">
+        <input type="hidden" asp-for="AppId" />
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Change App Icon</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="file" name="file" class="dropify" data-max-file-size="2M" data-max-height="2000" data-max-weight="3000" data-allowed-file-extensions="png jpg bmp" data-default-file="@Model.AppIconAddress" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm waves-effect waves-light" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+}
+

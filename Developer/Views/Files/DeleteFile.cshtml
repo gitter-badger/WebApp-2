@@ -1,0 +1,34 @@
+﻿@model Developer.Models.FilesViewModels.DeleteFileViewModel
+@{
+    ViewData["Title"] = "Delete" + Model.FileName;
+    Layout = "_AppLayout";
+}
+<div class="main-content">
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <strong>Caution!</strong> You are about to delete "@Model.FileName"! If you are confirmed to continue, you will lose this file. This process is not recoverable!
+    </div>
+    <div class="row row-inline-block small-spacing">
+        <form class="col-xs-12" asp-controller="Files" asp-action="DeleteFile" method="post">
+            <input type="hidden" asp-for="FileId" />
+            <div class="box-content bordered danger">
+                <h4 class="box-title"><i class="fa fa-trash ico"></i>Delete File</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="FileName"></label>
+                            <input asp-for="FileName" readonly="readonly" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-12 margin-top-30">
+                        <a class="btn btn-info btn-sm" asp-controller="Files" asp-action="ViewFiles" asp-route-id="@Model.BucketId">Back to files</a>
+                        <button class="btn btn-danger btn-sm" type="submit">Confirm to delete</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    @{
+        await Html.RenderPartialAsync("_footer");
+    }
+</div>
