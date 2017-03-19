@@ -9,7 +9,6 @@ obj
 /src/OSS/Storage
 node_modules
 /src/Developer/Storage
-/src/Developer/Storage
 Storage
 .vscode
 Properties
