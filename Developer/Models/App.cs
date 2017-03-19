@@ -52,6 +52,8 @@ namespace Developer.Models
         [ForeignKey(nameof(CreaterId))]
         public virtual DeveloperUser Creater { get; set; }
 
+        public virtual List<AppPermission> Permissions { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:\\ d' days'\\ h' hours'}")]
         [NotMapped]
         public virtual TimeSpan TimeExists => DateTime.Now - this.AppCreateTime;

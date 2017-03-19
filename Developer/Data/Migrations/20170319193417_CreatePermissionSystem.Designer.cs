@@ -9,9 +9,10 @@ using AiursoftBase.Models;
 namespace Developer.Data.Migrations
 {
     [DbContext(typeof(DeveloperDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170319193417_CreatePermissionSystem")]
+    partial class CreatePermissionSystem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")

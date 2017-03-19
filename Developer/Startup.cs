@@ -48,7 +48,7 @@ namespace Developer
             services.AddTransient<ISmsSender, AuthMessageSender>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -66,6 +66,7 @@ namespace Developer
             .UseIdentity()
             .UseAiursoftAuthentication(appId: "29bf5250a6d93d47b6164ac2821d5009", appSecret: "784400c3d9066c5584489497273f867e")
             .UseMvcWithDefaultRoute();
+            await app.ApplicationServices.GetRequiredService<DeveloperDbContext>().Seed(app);
         }
     }
 
