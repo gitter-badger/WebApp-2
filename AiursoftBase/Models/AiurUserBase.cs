@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using AiursoftBase.Models.API.OAuthViewModels;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AiursoftBase.Models
 {
@@ -24,8 +25,15 @@ namespace AiursoftBase.Models
             this.HeadImgUrl = model.User.HeadImgUrl;
             this.AccountCreateTime = model.User.AccountCreateTime;
         }
+
+        [NotMapped]
+        public string _openId { get; set; }
         [JsonProperty]
-        public string OpenId => this.Id;
+        public string OpenId
+        {
+            get { return this.Id ?? this._openId; }
+            set { this._openId = value; }
+        }
         [JsonProperty]
         public virtual string NickName { get; set; }
         [JsonProperty]
