@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wiki", "Wiki\Wiki.csproj", 
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CDN", "CDN\", "{0A316DEB-65CC-427B-96DB-63AFD0E45BE4}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_55116"
 		Debug.AspNetCompiler.PhysicalPath = "CDN\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55116\"
