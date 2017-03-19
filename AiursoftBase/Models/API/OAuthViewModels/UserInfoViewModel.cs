@@ -7,6 +7,6 @@ namespace AiursoftBase.Models.API.OAuthViewModels
 {
     public class UserInfoViewModel : AiurProtocal
     {
-        public virtual PureUser User { get; set; }
+        public virtual AiurUserBase User { get; set; }
     }
 }

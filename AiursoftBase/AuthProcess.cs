@@ -22,7 +22,7 @@ namespace AiursoftBase
                     Id = userinfo.User.OpenId,
                     NickName = userinfo.User.NickName,
                     Sex = userinfo.User.Sex,
-                    HeadImgUrl = userinfo.User.Headimgurl,
+                    HeadImgUrl = userinfo.User.HeadImgUrl,
                     UserName = userinfo.User.OpenId,
                     PreferedLanguage = userinfo.User.PreferedLanguage,
                     AccountCreateTime = userinfo.User.AccountCreateTime

@@ -231,7 +231,7 @@ namespace API.Controllers
             {
                 code = 0,
                 message = "Successfully get target user info.",
-                User = new PureUser(cuser)
+                User = cuser
             };
             return Json(viewModel);
         }

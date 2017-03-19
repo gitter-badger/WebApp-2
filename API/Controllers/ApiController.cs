@@ -141,7 +141,7 @@ namespace API.Controllers
                 model.Grants.Add(new AppUserRelation
                 {
                     Grant = grant,
-                    User = new PureUser(grant.User)
+                    User = grant.User
                 });
             }
             return Json(model);
