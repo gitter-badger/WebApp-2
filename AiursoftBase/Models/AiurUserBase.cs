@@ -28,6 +28,7 @@ namespace AiursoftBase.Models
 
         [NotMapped]
         public string _openId { get; set; }
+        [NotMapped]
         [JsonProperty]
         public string OpenId
         {
