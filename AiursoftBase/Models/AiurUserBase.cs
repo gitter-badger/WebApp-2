@@ -27,13 +27,11 @@ namespace AiursoftBase.Models
         }
 
         [NotMapped]
-        public string _openId { get; set; }
-        [NotMapped]
         [JsonProperty]
         public string OpenId
         {
-            get { return this.Id ?? this._openId; }
-            set { this._openId = value; }
+            get { return Id ; }
+            set { Id = value; }
         }
         [JsonProperty]
         public virtual string NickName { get; set; }

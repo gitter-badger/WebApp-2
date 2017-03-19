@@ -39,7 +39,6 @@ namespace AiursoftBase.Services.ToAPIServer
             });
             var result = await HTTPContainer.Get(url);
             var JResult = JsonConvert.DeserializeObject<UserInfoViewModel>(result);
-
             if (JResult.code != ErrorType.Success)
                 throw new Exception(JResult.message);
             return JResult;
