@@ -202,6 +202,7 @@ namespace API.Controllers
             }
 
             targetPack.IsUsed = true;
+            await _dbContext.SaveChangesAsync();
             var viewModel = new CodeToOpenIdViewModel
             {
                 openid = targetPack.UserId,

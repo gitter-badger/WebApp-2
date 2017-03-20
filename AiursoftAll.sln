@@ -38,7 +38,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CDN", "CDN\", "{0A316DEB-65
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Doc", "Doc\", "{E2ED734F-ED7D-4D91-A986-FF8C9B9C96D0}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_55120"
 		Debug.AspNetCompiler.PhysicalPath = "Doc\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55120\"
