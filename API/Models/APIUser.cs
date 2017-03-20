@@ -17,8 +17,8 @@ namespace API.Models
     {
         [InverseProperty(nameof(OAuthPack.User))]
         public virtual List<OAuthPack> Packs { get; set; }
-        [InverseProperty(nameof(LocalAppGrant.User))]
-        public virtual List<LocalAppGrant> GrantedApps { get; set; }
+        [InverseProperty(nameof(AppGrant.User))]
+        public virtual List<AppGrant> GrantedApps { get; set; }
 
         public async virtual Task GrantTargetApp(APIDbContext DbContext, string AppId)
         {
@@ -26,7 +26,7 @@ namespace API.Models
             {
                 return;
             }
-            var AppGrant = new LocalAppGrant
+            var AppGrant = new AppGrant
             {
                 AppID = AppId,
                 APIUserId = this.Id

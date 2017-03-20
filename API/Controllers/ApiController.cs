@@ -128,22 +128,15 @@ namespace API.Controllers
                 return Json(new ValidateAccessTokenViewModel { code = ErrorType.Timeout, message = "Your access token is already Timeout!" });
             }
 
-            var grants = _dbContext.LocalAppGrant.Include(t=>t.User).Where(t => t.AppID == target.ApplyAppId).Take(200);
+            var grants = _dbContext.LocalAppGrant.Include(t => t.User).Where(t => t.AppID == target.ApplyAppId).Take(200);
             var model = new AllUserGrantedViewModel
             {
                 AppId = target.ApplyAppId,
-                Grants = new List<AppUserRelation>(),
+                Grants = new List<IAppGrant>(),
                 code = ErrorType.Success,
                 message = "Successfully get all your users"
             };
-            foreach (var grant in grants)
-            {
-                model.Grants.Add(new AppUserRelation
-                {
-                    Grant = grant,
-                    User = grant.User
-                });
-            }
+            model.Grants.AddRange(grants);
             return Json(model);
         }
     }

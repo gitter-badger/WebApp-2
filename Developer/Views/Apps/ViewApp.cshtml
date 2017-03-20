@@ -145,11 +145,11 @@
                                 @foreach (var grant in Model.Grants)
                                 {
                                 <tr>
-                                    <td>@grant.User.OpenId</td>
-                                    <td>@grant.User.NickName</td>
-                                    <td>@grant.User.Sex</td>
-                                    <td>@Html.DisplayFor(t => grant.Grant.GrantTime)</td>
-                                    <td>@grant.User.PreferedLanguage</td>
+                                    <td>@grant.UserInfo.OpenId</td>
+                                    <td>@grant.UserInfo.NickName</td>
+                                    <td>@grant.UserInfo.Sex</td>
+                                    <td>@Html.DisplayFor(t => grant.GrantTime)</td>
+                                    <td>@grant.UserInfo.PreferedLanguage</td>
                                 </tr>
                                 }
                             </tbody>

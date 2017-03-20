@@ -28,11 +28,11 @@ namespace Developer.Models.AppsViewModels
             var token = AppsContainer.AccessToken(ThisApp.AppId, ThisApp.AppSecret);
 
             var buckets = await ApiService.ViewMyBucketsAsync(await token());
-            this.Buckets = buckets.Buckets;
+            Buckets = buckets.Buckets;
 
             var grants = await AiursoftBase.Services.ToAPIServer.APIService.AllUserGrantedAsync(await token());
-            this.Grants = grants.Grants;
-            this.AppIconAddress = ThisApp.AppIconAddress;
+            Grants = grants.Grants;
+            AppIconAddress = ThisApp.AppIconAddress;
         }
         private ViewAppViewModel(DeveloperUser User, App ThisApp) : base(User)
         {
@@ -79,7 +79,7 @@ namespace Developer.Models.AppsViewModels
         public virtual string AppDomain { get; set; }
 
         public IEnumerable<Bucket> Buckets { get; set; } //= new List<Bucket>();
-        public IEnumerable<AppUserRelation> Grants { get; set; }
+        public IEnumerable<IAppGrant> Grants { get; set; }
 
     }
 }

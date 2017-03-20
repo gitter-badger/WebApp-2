@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using API.Models;
+using AiursoftBase.Models.API;
 
 namespace API.Data
 {
@@ -16,7 +17,7 @@ namespace API.Data
 
         public DbSet<AccessToken> AccessToken { get; set; }
         public DbSet<OAuthPack> OAuthPack { get; set; }
-        public DbSet<LocalAppGrant> LocalAppGrant { get; set; }
+        public DbSet<AppGrant> LocalAppGrant { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
