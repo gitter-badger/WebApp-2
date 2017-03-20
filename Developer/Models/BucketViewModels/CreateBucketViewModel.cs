@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
+using AiursoftBase.Attributes;
 
 namespace Developer.Models.BucketViewModels
 {
@@ -32,6 +33,7 @@ namespace Developer.Models.BucketViewModels
         [MaxLength(25)]
         [MinLength(5)]
         [Required]
+        [NoSpace]
         public string NewBucketName { get; set; }
         public bool ModelStateValid { get; set; } = true;
         [Display(Name = "Open To Read:")]
