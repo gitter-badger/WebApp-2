@@ -11,6 +11,6 @@ namespace AiursoftBase.Models.API
         public string AppID { get; set; }
         public DateTime GrantTime { get; set; }// = DateTime.Now;
         public string APIUserId { get; set; }
-        public virtual AiurUserBase UserInfo { get; }
+        public virtual AiurUserBase UserInfo { get; set; }
     }
 }
