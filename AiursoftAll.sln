@@ -15,48 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Developer", "Developer\Deve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wiki", "Wiki\Wiki.csproj", "{A817839B-301A-4B5C-A21E-386302C97435}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CDN", "CDN\", "{0A316DEB-65CC-427B-96DB-63AFD0E45BE4}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_55116"
-		Debug.AspNetCompiler.PhysicalPath = "CDN\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55116\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_55116"
-		Release.AspNetCompiler.PhysicalPath = "CDN\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55116\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "55116"
-		SlnRelativePath = "CDN\"
-	EndProjectSection
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Doc", "Doc\", "{E2ED734F-ED7D-4D91-A986-FF8C9B9C96D0}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_55120"
-		Debug.AspNetCompiler.PhysicalPath = "Doc\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55120\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_55120"
-		Release.AspNetCompiler.PhysicalPath = "Doc\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55120\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "55120"
-		SlnRelativePath = "Doc\"
-	EndProjectSection
-EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

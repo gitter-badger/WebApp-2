@@ -1,4 +1,6 @@
 # Aiursoft Server Side
+[![Build Status](https://travis-ci.org/Aiursoft2018/WebApp.svg?branch=master)](https://travis-ci.org/Aiursoft2018/WebApp)
+
 The Server-side application of Aiursoft. Hosting on Aiursoft Server.
 
 ### Contains:
