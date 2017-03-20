@@ -28,7 +28,7 @@ namespace Developer.Data
 
         public async Task Seed(IApplicationBuilder app)
         {
-            if (await this.Permissions.CountAsync() == 0)
+            if (await Permissions.CountAsync() == 0)
             {
                 this.Permissions.Add(new Permission
                 {
