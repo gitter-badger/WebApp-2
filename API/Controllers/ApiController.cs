@@ -132,7 +132,7 @@ namespace API.Controllers
             var model = new AllUserGrantedViewModel
             {
                 AppId = target.ApplyAppId,
-                Grants = new List<IAppGrant>(),
+                Grants = new List<Grant>(),
                 code = ErrorType.Success,
                 message = "Successfully get all your users"
             };

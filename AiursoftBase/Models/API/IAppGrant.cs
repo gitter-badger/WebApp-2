@@ -6,11 +6,11 @@ using System.Text;
 
 namespace AiursoftBase.Models.API
 {
-    public interface IAppGrant
+    public class Grant
     {
-        string AppID { get; set; }
-        DateTime GrantTime { get; set; }// = DateTime.Now;
-        string APIUserId { get; set; }
-        AiurUserBase UserInfo { get; }
+        public string AppID { get; set; }
+        public DateTime GrantTime { get; set; }// = DateTime.Now;
+        public string APIUserId { get; set; }
+        public virtual AiurUserBase UserInfo { get; }
     }
 }

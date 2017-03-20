@@ -79,7 +79,7 @@ namespace Developer.Models.AppsViewModels
         public virtual string AppDomain { get; set; }
 
         public IEnumerable<Bucket> Buckets { get; set; } //= new List<Bucket>();
-        public IEnumerable<IAppGrant> Grants { get; set; }
+        public IEnumerable<Grant> Grants { get; set; }
 
     }
 }

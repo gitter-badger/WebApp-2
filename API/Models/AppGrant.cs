@@ -9,16 +9,13 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    public class AppGrant : IAppGrant
+    public class AppGrant : Grant
     {
         [JsonIgnore]
         public int AppGrantId { get; set; }
-        public string AppID { get; set; }
-        public DateTime GrantTime { get; set; }// = DateTime.Now;
-        public string APIUserId { get; set; }
         [JsonIgnore]
         public APIUser User { get; set; }
 
-        public AiurUserBase UserInfo => User;
+        public override AiurUserBase UserInfo => User;
     }
 }
