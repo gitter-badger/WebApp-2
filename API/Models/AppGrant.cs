@@ -16,7 +16,7 @@ namespace API.Models
         public string AppID { get; set; }
         public DateTime GrantTime { get; set; }// = DateTime.Now;
         public string APIUserId { get; set; }
-
+        [JsonIgnore]
         public APIUser User { get; set; }
 
         public AiurUserBase UserInfo => User;
