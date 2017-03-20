@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AiursoftBase.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace AiursoftBase.Models.OSS.ApiAddressModels
         [Required]
         public int BucketId { get; set; }
         [Required]
+        [NoSpace]
         public string NewBucketName { get; set; }
         public bool OpenToRead { get; set; }
         public bool OpenToUpload { get; set; }
