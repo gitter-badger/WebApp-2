@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
+using AiursoftBase.Attributes;
 
 namespace Developer.Models.BucketViewModels
 {
@@ -26,17 +27,18 @@ namespace Developer.Models.BucketViewModels
             c.ViewData["PartId"] = new SelectList(this.AllApps, nameof(App.AppId), nameof(App.AppName));
         }
         [Required]
-        [Display(Name = "Selete App:")]
+        [Display(Name = "Selete App")]
         public string AppId { get; set; }
-        [Display(Name = "New bucket name:")]
+        [Display(Name = "New bucket name")]
         [MaxLength(25)]
         [MinLength(5)]
         [Required]
+        [NoSpace]
         public string NewBucketName { get; set; }
         public bool ModelStateValid { get; set; } = true;
-        [Display(Name = "Open To Read:")]
+        [Display(Name = "Open To Read")]
         public bool OpenToRead { get; set; }
-        [Display(Name = "Open To Upload:")]
+        [Display(Name = "Open To Upload")]
         public bool OpenToUpload { get; set; }
     }
 }
