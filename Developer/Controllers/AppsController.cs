@@ -17,6 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static System.IO.Path;
 using static System.IO.Directory;
+using System.Collections.Generic;
 
 namespace Developer.Controllers
 {
@@ -114,15 +115,15 @@ namespace Developer.Controllers
 
         public async Task<IActionResult> ViewApp(string id, bool JustHaveUpdated = false)
         {
-            var _app = await _dbContext.Apps.FindAsync(id);
-            if (_app == null)
+            var app = await _dbContext.Apps.FindAsync(id);
+            if (app == null)
             {
                 return NotFound();
             }
-            var _cuser = await GetCurrentUserAsync();
-            var _model = await ViewAppViewModel.SelfCreateAsync(_cuser, _app);
-            _model.JustHaveUpdated = JustHaveUpdated;
-            return View(_model);
+            var cuser = await GetCurrentUserAsync();
+            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _dbContext);
+            model.JustHaveUpdated = JustHaveUpdated;
+            return View(model);
         }
 
         [HttpPost]
@@ -132,7 +133,7 @@ namespace Developer.Controllers
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId));
+                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _dbContext);
                 return View(model);
             }
             var _target = await _dbContext.Apps.FindAsync(model.AppId);
@@ -153,6 +154,19 @@ namespace Developer.Controllers
             _target.PrivacyStatementUrl = model.PrivacyStatementUrl;
             _target.LicenseUrl = model.LicenseUrl;
             _target.AppDomain = model.AppDomain;
+            _dbContext.AppPermissions.RemoveRange(_dbContext.AppPermissions.Where(t => t.AppId == _target.AppId));
+            foreach (var key in HttpContext.Request.Form.Keys)
+            {
+                if (key.StartsWith("PermissionStatus") && HttpContext.Request.Form[key] == "on")
+                {
+                    var pId = Convert.ToInt32(key.Substring("PermissionStatus".Length));
+                    _dbContext.AppPermissions.Add(new AppPermission
+                    {
+                        AppId = _target.AppId,
+                        PermissionId = pId
+                    });
+                }
+            }
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(ViewApp), new { id = _target.AppId, JustHaveUpdated = true });
         }

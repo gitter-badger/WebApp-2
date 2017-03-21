@@ -9,6 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AiursoftBase.Services.ToOSSServer;
 using AiursoftBase.Models.API;
+using Developer.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Developer.Models.AppsViewModels
 {
@@ -16,13 +18,13 @@ namespace Developer.Models.AppsViewModels
     {
         [Obsolete(message: "This method is only for framework", error: true)]
         public ViewAppViewModel() { }
-        public static async Task<ViewAppViewModel> SelfCreateAsync(DeveloperUser User, App ThisApp)
+        public static async Task<ViewAppViewModel> SelfCreateAsync(DeveloperUser User, App ThisApp, DeveloperDbContext _dbContext)
         {
             var model = new ViewAppViewModel(User, ThisApp);
-            await model.Recover(User, ThisApp);
+            await model.Recover(User, ThisApp, _dbContext);
             return model;
         }
-        public async Task Recover(DeveloperUser User, App ThisApp)
+        public async Task Recover(DeveloperUser User, App ThisApp, DeveloperDbContext _dbContext)
         {
             base.Recover(User, 1);
             var token = AppsContainer.AccessToken(ThisApp.AppId, ThisApp.AppSecret);
@@ -32,8 +34,27 @@ namespace Developer.Models.AppsViewModels
 
             var grants = await AiursoftBase.Services.ToAPIServer.APIService.AllUserGrantedAsync(await token());
             Grants = grants.Grants;
-            AppIconAddress = ThisApp.AppIconAddress;
+
+            await RecoverPermissions(_dbContext, ThisApp);
         }
+
+        public async Task RecoverPermissions(DeveloperDbContext _dbContext, App ThisApp)
+        {
+            var allPermissions = await _dbContext.Permissions.ToListAsync();
+            var currentPermissions = await _dbContext.AppPermissions.Where(t => t.AppId == ThisApp.AppId).ToListAsync();
+            var viewablePermissions = new List<ViewAblePermission>();
+            foreach (var p in allPermissions)
+            {
+                viewablePermissions.Add(new ViewAblePermission()
+                {
+                    PermissionId = p.PermissionId,
+                    PermissionName = p.PermissionName,
+                    Permitted = currentPermissions.Exists(t => t.PermissionId == p.PermissionId)
+                });
+            }
+            this.ViewAblePermission = viewablePermissions;
+        }
+
         private ViewAppViewModel(DeveloperUser User, App ThisApp) : base(User)
         {
             if (ThisApp.CreaterId != User.Id)
@@ -80,6 +101,13 @@ namespace Developer.Models.AppsViewModels
 
         public IEnumerable<Bucket> Buckets { get; set; } //= new List<Bucket>();
         public IEnumerable<Grant> Grants { get; set; }
+        public IEnumerable<ViewAblePermission> ViewAblePermission { get; set; }
+    }
 
+    public class ViewAblePermission
+    {
+        public virtual int PermissionId { get; set; }
+        public virtual string PermissionName { get; set; }
+        public virtual bool Permitted { get; set; }
     }
 }
