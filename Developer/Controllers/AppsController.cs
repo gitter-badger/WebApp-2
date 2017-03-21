@@ -17,6 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static System.IO.Path;
 using static System.IO.Directory;
+using System.Collections.Generic;
 
 namespace Developer.Controllers
 {
@@ -114,13 +115,26 @@ namespace Developer.Controllers
 
         public async Task<IActionResult> ViewApp(string id, bool JustHaveUpdated = false)
         {
-            var _app = await _dbContext.Apps.FindAsync(id);
-            if (_app == null)
+            var app = await _dbContext.Apps.FindAsync(id);
+            if (app == null)
             {
                 return NotFound();
             }
             var _cuser = await GetCurrentUserAsync();
-            var _model = await ViewAppViewModel.SelfCreateAsync(_cuser, _app);
+            var _model = await ViewAppViewModel.SelfCreateAsync(_cuser, app);
+
+            var allPermissions = await _dbContext.Permissions.ToListAsync();
+            var currentPermissions = await _dbContext.AppPermissions.Where(t => t.AppId == app.AppId).ToListAsync();
+            var viewablePermissions = new List<ViewAblePermission>();
+            foreach (var p in allPermissions)
+            {
+                viewablePermissions.Add(new ViewAblePermission()
+                {
+                    PermissionName = p.PermissionName,
+                    Permitted = currentPermissions.Exists(t => t.PermissionId == p.PermissionId)
+                });
+            }
+            _model.ViewAblePermission = viewablePermissions;
             _model.JustHaveUpdated = JustHaveUpdated;
             return View(_model);
         }

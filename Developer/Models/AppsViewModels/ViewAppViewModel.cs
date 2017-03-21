@@ -32,7 +32,6 @@ namespace Developer.Models.AppsViewModels
 
             var grants = await AiursoftBase.Services.ToAPIServer.APIService.AllUserGrantedAsync(await token());
             Grants = grants.Grants;
-            AppIconAddress = ThisApp.AppIconAddress;
         }
         private ViewAppViewModel(DeveloperUser User, App ThisApp) : base(User)
         {
@@ -80,6 +79,12 @@ namespace Developer.Models.AppsViewModels
 
         public IEnumerable<Bucket> Buckets { get; set; } //= new List<Bucket>();
         public IEnumerable<Grant> Grants { get; set; }
+        public IEnumerable<ViewAblePermission> ViewAblePermission { get; set; }
+    }
 
+    public class ViewAblePermission
+    {
+        public virtual string PermissionName { get; set; }
+        public virtual bool Permitted { get; set; }
     }
 }
