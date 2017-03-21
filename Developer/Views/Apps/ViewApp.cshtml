@@ -79,7 +79,7 @@
                             @foreach (var p in Model.ViewAblePermission)
                             {
                                 <div class="checkbox danger">
-                                    <input class="checkbox" type="checkbox" id="@p.PermissionId" name="@p.PermissionId" value="@p.Permitted">
+                                    <input class="checkbox" type="checkbox" id="@p.PermissionId" name="PermissionStatus@(p.PermissionId)" checked="@p.Permitted">
                                     <label for="@p.PermissionId">
                                         @p.PermissionName
                                     </label>

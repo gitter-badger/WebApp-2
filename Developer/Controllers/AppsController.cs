@@ -120,24 +120,10 @@ namespace Developer.Controllers
             {
                 return NotFound();
             }
-            var _cuser = await GetCurrentUserAsync();
-            var _model = await ViewAppViewModel.SelfCreateAsync(_cuser, app);
-
-            var allPermissions = await _dbContext.Permissions.ToListAsync();
-            var currentPermissions = await _dbContext.AppPermissions.Where(t => t.AppId == app.AppId).ToListAsync();
-            var viewablePermissions = new List<ViewAblePermission>();
-            foreach (var p in allPermissions)
-            {
-                viewablePermissions.Add(new ViewAblePermission()
-                {
-                    PermissionId = p.PermissionId,
-                    PermissionName = p.PermissionName,
-                    Permitted = currentPermissions.Exists(t => t.PermissionId == p.PermissionId)
-                });
-            }
-            _model.ViewAblePermission = viewablePermissions;
-            _model.JustHaveUpdated = JustHaveUpdated;
-            return View(_model);
+            var cuser = await GetCurrentUserAsync();
+            var model = await ViewAppViewModel.SelfCreateAsync(cuser, app, _dbContext);
+            model.JustHaveUpdated = JustHaveUpdated;
+            return View(model);
         }
 
         [HttpPost]
@@ -147,7 +133,7 @@ namespace Developer.Controllers
             if (!ModelState.IsValid)
             {
                 model.ModelStateValid = false;
-                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId));
+                await model.Recover(cuser, await _dbContext.Apps.FindAsync(model.AppId), _dbContext);
                 return View(model);
             }
             var _target = await _dbContext.Apps.FindAsync(model.AppId);
@@ -168,6 +154,19 @@ namespace Developer.Controllers
             _target.PrivacyStatementUrl = model.PrivacyStatementUrl;
             _target.LicenseUrl = model.LicenseUrl;
             _target.AppDomain = model.AppDomain;
+            _dbContext.AppPermissions.RemoveRange(_dbContext.AppPermissions.Where(t => t.AppId == _target.AppId));
+            foreach (var key in HttpContext.Request.Form.Keys)
+            {
+                if (key.StartsWith("PermissionStatus") && HttpContext.Request.Form[key] == "on")
+                {
+                    var pId = Convert.ToInt32(key.Substring("PermissionStatus".Length));
+                    _dbContext.AppPermissions.Add(new AppPermission
+                    {
+                        AppId = _target.AppId,
+                        PermissionId = pId
+                    });
+                }
+            }
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(ViewApp), new { id = _target.AppId, JustHaveUpdated = true });
         }
