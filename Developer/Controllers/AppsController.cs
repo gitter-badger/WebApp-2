@@ -130,6 +130,7 @@ namespace Developer.Controllers
             {
                 viewablePermissions.Add(new ViewAblePermission()
                 {
+                    PermissionId = p.PermissionId,
                     PermissionName = p.PermissionName,
                     Permitted = currentPermissions.Exists(t => t.PermissionId == p.PermissionId)
                 });

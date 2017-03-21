@@ -71,6 +71,28 @@
                 </div>
             </div>
 
+            <div class="box-content bordered warning">
+                <h4 class="box-title"><i class="fa fa-sign-in ico"></i>Permission Settings</h4>
+                <div class="card-content">
+                    <div class="col-md-12">
+                        <div class="col-md-8">
+                            @foreach (var p in Model.ViewAblePermission)
+                            {
+                                <div class="checkbox danger">
+                                    <input class="checkbox" type="checkbox" id="@p.PermissionId" name="@p.PermissionId" value="@p.Permitted">
+                                    <label for="@p.PermissionId">
+                                        @p.PermissionName
+                                    </label>
+                                </div>
+                                <hr />
+                            }
+                            <input class="btn btn-success waves-effect waves-light" id="btn-search" type="submit" value="Save"/>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <div class="box-content bordered info">
                 <h4 class="box-title"><i class="fa fa-sign-in ico"></i>OAuth Settings</h4>
                 <div class="card-content">

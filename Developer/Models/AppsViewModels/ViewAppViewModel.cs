@@ -84,6 +84,7 @@ namespace Developer.Models.AppsViewModels
 
     public class ViewAblePermission
     {
+        public virtual int PermissionId { get; set; }
         public virtual string PermissionName { get; set; }
         public virtual bool Permitted { get; set; }
     }
